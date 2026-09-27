@@ -385,18 +385,31 @@
           <div class="subtitle">{{ part }} multi-agent workflow demo</div>
         </div>
       </div>
-      <div class="pill">Live workflow</div>
+      <div class="pill">Series overview</div>
     </header>
 
     <div class="grid">
       <section class="panel task-box">
-        <h2>Sample task</h2>
+        <h2>Series overview</h2>
 
-        <textarea id="taskInput">Explain how AI agents use Python tools safely and effectively.</textarea>
+        <textarea id="taskInput">Explore the progression from basic agent concepts to multi-agent orchestration across Parts 1 through 7.</textarea>
 
         <div class="button-row">
-          <button id="runButton">Run agent workflow</button>
+          <button id="runButton">Run series snapshot</button>
           <button id="resetButton" class="secondary">Reset view</button>
+        </div>
+
+        <div class="section">
+          <h3>Collection highlights</h3>
+          <div class="output-box compact" id="seriesSummary">
+Part 1: What Are AI Agents?
+Part 2: How AI Agents Work
+Part 3: First Simple Agent
+Part 4: Giving Agents Tools
+Part 5: Memory and Context
+Part 6: RAG + AI Agents
+Part 7: Multi-Agent Systems
+          </div>
         </div>
       </section>
 
@@ -448,33 +461,44 @@
 
         <div class="section">
           <h3>Task and state</h3>
-          <div class="output-box compact" id="stateOutput">No workflow run yet.</div>
+          <div class="output-box compact" id="stateOutput">No workflow run yet. The agent collection is ready from Part 1 through Part 7.</div>
         </div>
       </section>
     </div>
 
     <section class="panel" style="margin-top: 24px;">
-      <h2>What the agent can do</h2>
+      <h2>Part 1 to Part 7 journey</h2>
       <ul class="feature-list">
-        <li>Research the task and build a clear summary.</li>
-        <li>Write a structured draft from the research.</li>
-        <li>Review the draft for quality and completeness.</li>
-        <li>Track the full workflow state and decisions.</li>
+        <li>Understand what makes an AI agent different from a chatbot.</li>
+        <li>Learn the agent loop, state, memory, and tool use.</li>
+        <li>Build a first working agent in Python.</li>
+        <li>Extend the agent with functions, APIs, and external tools.</li>
+        <li>Add context, retrieval, and knowledge-grounded reasoning.</li>
+        <li>Explore multi-agent coordination and review workflows.</li>
       </ul>
 
       <div class="section">
+        <h3>Articles included</h3>
+        <div class="output-box" id="articleListOutput">
+{% for part in series_parts %}
+Part {{ part.number }} — {{ part.title }}
+{% endfor %}
+        </div>
+      </div>
+
+      <div class="section">
         <h3>Research summary</h3>
-        <div class="output-box" id="researchOutput">Waiting for research...</div>
+        <div class="output-box" id="researchOutput">The series builds from agent fundamentals to orchestration, with each part adding capabilities and patterns that compound into a stronger agent architecture.</div>
       </div>
 
       <div class="section">
         <h3>Draft</h3>
-        <div class="output-box" id="draftOutput">Waiting for draft...</div>
+        <div class="output-box" id="draftOutput">This dashboard represents the full learning progression across the first seven articles, showing how the system evolves from simple prompting to structured multi-agent workflows.</div>
       </div>
 
       <div class="section">
         <h3>Review</h3>
-        <div class="output-box" id="reviewOutput">Waiting for review...</div>
+        <div class="output-box" id="reviewOutput">Status: series overview complete. The content reflects the collection of articles from Part 1 through Part 7 and is ready for weekly additions.</div>
       </div>
     </section>
   </div>
@@ -575,17 +599,17 @@
     }
 
     function resetView() {
-      document.getElementById('taskInput').value = 'Explain how AI agents use Python tools safely and effectively.';
+      document.getElementById('taskInput').value = 'Explore the progression from basic agent concepts to multi-agent orchestration across Parts 1 through 7.';
       document.getElementById('statusValue').textContent = 'pending';
       document.getElementById('statusValue').className = 'value pending';
       document.getElementById('researchValue').textContent = 'waiting';
       document.getElementById('draftValue').textContent = 'waiting';
       document.getElementById('reviewValue').textContent = 'waiting';
       resetStages();
-      document.getElementById('stateOutput').textContent = 'No workflow run yet.';
-      document.getElementById('researchOutput').textContent = 'Waiting for research...';
-      document.getElementById('draftOutput').textContent = 'Waiting for draft...';
-      document.getElementById('reviewOutput').textContent = 'Waiting for review...';
+      document.getElementById('stateOutput').textContent = 'No workflow run yet. The agent collection is ready from Part 1 through Part 7.';
+      document.getElementById('researchOutput').textContent = 'The series builds from agent fundamentals to orchestration, with each part adding capabilities and patterns that compound into a stronger agent architecture.';
+      document.getElementById('draftOutput').textContent = 'This dashboard represents the full learning progression across the first seven articles, showing how the system evolves from simple prompting to structured multi-agent workflows.';
+      document.getElementById('reviewOutput').textContent = 'Status: series overview complete. The content reflects the collection of articles from Part 1 through Part 7 and is ready for weekly additions.';
     }
 
     document.getElementById('runButton').addEventListener('click', runWorkflow);
