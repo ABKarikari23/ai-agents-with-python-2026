@@ -83,7 +83,7 @@ Without evaluation, traces, validation, state management, and clear stopping con
 # 💻 Get the Code
 All projects from the **AI Agents with Python 2026** series are available in the GitHub repository.
 
-👉 **[AI Agents with Python 2026 — GitHub Repository](https://github.com/ABKarikari23/ai-agents-with-python-2026)**
+ **[AI Agents with Python 2026 — GitHub Repository](https://github.com/ABKarikari23/ai-agents-with-python-2026)**
 
 For this article, navigate to:
 
