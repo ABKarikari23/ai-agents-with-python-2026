@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agent State Monitor</title>
+  <style>
+    :root {
+      --bg: #030712;
+      --bg-soft: #0f172a;
+      --panel: rgba(15, 23, 42, 0.82);
+      --panel-strong: rgba(15, 23, 42, 0.96);
+      --panel-alt: rgba(30, 41, 59, 0.9);
+      --border: rgba(148, 163, 184, 0.2);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-strong: #2563eb;
+      --secondary: #a78bfa;
+      --success: #34d399;
+      --success-soft: rgba(52, 211, 153, 0.15);
+      --warning: #fbbf24;
+      --warning-soft: rgba(251, 191, 36, 0.15);
+      --danger: #f87171;
+      --danger-soft: rgba(248, 113, 113, 0.15);
+      --shadow: 0 20px 45px rgba(2, 6, 23, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Inter, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(167, 139, 250, 0.18), transparent 25%),
+        linear-gradient(135deg, var(--bg), var(--bg-soft));
+      color: var(--text);
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 32px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: grid;
+      place-items: center;
+      box-shadow: var(--shadow);
+      font-weight: 700;
+      color: #020617;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 2.6vw, 3rem);
+      line-height: 1.1;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      background: rgba(56, 189, 248, 0.12);
+      color: #bae6fd;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 1.1fr) minmax(440px, 1.9fr);
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.55s ease both;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      top: -30%;
+      left: -10%;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .panel h2 {
+      margin: 0 0 18px 0;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #cbd5e1;
+    }
+
+    .task-box {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text);
+      padding: 16px 14px;
+      font-size: 0.98rem;
+      line-height: 1.5;
+      resize: vertical;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: rgba(56, 189, 248, 0.7);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+      color: white;
+      font-weight: 700;
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.26);
+    }
+
+    button.secondary {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: none;
+      color: var(--text);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .metric {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      border-radius: 14px;
+      padding: 14px 12px;
+      min-height: 82px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .metric:hover {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .metric .label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .metric .value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: block;
+    }
+
+    .value.completed { color: var(--success); }
+    .value.pending { color: var(--warning); }
+    .value.failed { color: var(--danger); }
+    .value.needs_revision { color: var(--warning); }
+
+    .workflow-stage {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      margin-top: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      background: rgba(15, 23, 42, 0.6);
+      transition: all 0.25s ease;
+    }
+
+    .workflow-stage .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(148, 163, 184, 0.4);
+      box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .workflow-stage.active .dot,
+    .workflow-stage.complete .dot {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.16);
+      animation: pulse 1.8s infinite ease-in-out;
+    }
+
+    .workflow-stage.complete {
+      border-color: rgba(52, 211, 153, 0.3);
+      background: rgba(52, 211, 153, 0.06);
+    }
+
+    .workflow-stage .name {
+      flex: 1;
+      font-size: 0.96rem;
+      font-weight: 600;
+    }
+
+    .workflow-stage .tag {
+      color: var(--muted);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section {
+      margin-top: 22px;
+    }
+
+    .section h3 {
+      margin: 0 0 10px 0;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .output-box {
+      background: rgba(2, 6, 23, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 14px;
+      padding: 15px 16px;
+      color: #dfeafe;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      min-height: 140px;
+      transition: all 0.3s ease;
+    }
+
+    .output-box.compact {
+      min-height: 100px;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .feature-list li {
+      padding: 12px 14px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.12);
+      border-radius: 12px;
+      color: #dbeafe;
+      transition: transform 0.2s ease;
+    }
+
+    .feature-list li:hover {
+      transform: translateX(4px);
+    }
+
+    .ghost {
+      opacity: 0.7;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.22);
+      }
+      50% {
+        transform: scale(1.12);
+        box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.08);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .status-grid {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">AI</div>
+        <div>
+          <h1>{{ title }}</h1>
+          <div class="subtitle">{{ part }} multi-agent workflow demo</div>
+        </div>
+      </div>
+      <div class="pill">Live workflow</div>
+    </header>
+
+    <div class="grid">
+      <section class="panel task-box">
+        <h2>Sample task</h2>
+
+        <textarea id="taskInput">Explain how AI agents use Python tools safely and effectively.</textarea>
+
+        <div class="button-row">
+          <button id="runButton">Run agent workflow</button>
+          <button id="resetButton" class="secondary">Reset view</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Workflow state</h2>
+
+        <div class="status-grid">
+          <div class="metric">
+            <span class="label">Status</span>
+            <span class="value pending" id="statusValue">pending</span>
+          </div>
+          <div class="metric">
+            <span class="label">Research</span>
+            <span class="value" id="researchValue">waiting</span>
+          </div>
+          <div class="metric">
+            <span class="label">Draft</span>
+            <span class="value" id="draftValue">waiting</span>
+          </div>
+          <div class="metric">
+            <span class="label">Review</span>
+            <span class="value" id="reviewValue">waiting</span>
+          </div>
+        </div>
+
+        <div class="workflow-stage" id="stage-research">
+          <span class="dot"></span>
+          <span class="name">Research</span>
+          <span class="tag" id="tag-research">queued</span>
+        </div>
+
+        <div class="workflow-stage" id="stage-draft">
+          <span class="dot"></span>
+          <span class="name">Draft</span>
+          <span class="tag" id="tag-draft">queued</span>
+        </div>
+
+        <div class="workflow-stage" id="stage-review">
+          <span class="dot"></span>
+          <span class="name">Review</span>
+          <span class="tag" id="tag-review">queued</span>
+        </div>
+
+        <div class="workflow-stage" id="stage-complete">
+          <span class="dot"></span>
+          <span class="name">Complete</span>
+          <span class="tag" id="tag-complete">idle</span>
+        </div>
+
+        <div class="section">
+          <h3>Task and state</h3>
+          <div class="output-box compact" id="stateOutput">No workflow run yet.</div>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel" style="margin-top: 24px;">
+      <h2>What the agent can do</h2>
+      <ul class="feature-list">
+        <li>Research the task and build a clear summary.</li>
+        <li>Write a structured draft from the research.</li>
+        <li>Review the draft for quality and completeness.</li>
+        <li>Track the full workflow state and decisions.</li>
+      </ul>
+
+      <div class="section">
+        <h3>Research summary</h3>
+        <div class="output-box" id="researchOutput">Waiting for research...</div>
+      </div>
+
+      <div class="section">
+        <h3>Draft</h3>
+        <div class="output-box" id="draftOutput">Waiting for draft...</div>
+      </div>
+
+      <div class="section">
+        <h3>Review</h3>
+        <div class="output-box" id="reviewOutput">Waiting for review...</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const stageMap = {
+      research: document.getElementById('stage-research'),
+      draft: document.getElementById('stage-draft'),
+      review: document.getElementById('stage-review'),
+      complete: document.getElementById('stage-complete')
+    };
+
+    function resetStages() {
+      Object.values(stageMap).forEach((stage) => {
+        stage.classList.remove('active', 'complete');
+      });
+      document.getElementById('tag-research').textContent = 'queued';
+      document.getElementById('tag-draft').textContent = 'queued';
+      document.getElementById('tag-review').textContent = 'queued';
+      document.getElementById('tag-complete').textContent = 'idle';
+    }
+
+    function applyStageStatus(status) {
+      resetStages();
+
+      if (status === 'pending') {
+        stageMap.research.classList.add('active');
+        document.getElementById('tag-research').textContent = 'running';
+        return;
+      }
+
+      if (status === 'research_complete' || status === 'draft_complete' || status === 'review_complete' || status === 'completed') {
+        stageMap.research.classList.add('complete');
+        document.getElementById('tag-research').textContent = 'done';
+      }
+
+      if (status === 'draft_complete' || status === 'review_complete' || status === 'completed') {
+        stageMap.draft.classList.add('complete');
+        document.getElementById('tag-draft').textContent = 'done';
+      }
+
+      if (status === 'review_complete' || status === 'completed') {
+        stageMap.review.classList.add('complete');
+        document.getElementById('tag-review').textContent = 'done';
+      }
+
+      if (status === 'completed') {
+        stageMap.complete.classList.add('complete');
+        document.getElementById('tag-complete').textContent = 'done';
+      }
+    }
+
+    function updateStatusDisplay(data) {
+      const status = data.status || 'pending';
+      const statusValue = document.getElementById('statusValue');
+      statusValue.textContent = status;
+      statusValue.className = 'value ' + status;
+
+      document.getElementById('researchValue').textContent = data.research ? 'ready' : 'waiting';
+      document.getElementById('draftValue').textContent = data.draft ? 'ready' : 'waiting';
+      document.getElementById('reviewValue').textContent = data.review ? 'ready' : 'waiting';
+
+      const stateOutput = document.getElementById('stateOutput');
+      stateOutput.textContent = JSON.stringify({
+        task: data.task,
+        status: data.status,
+        errors: data.errors || [],
+        review: data.review || null
+      }, null, 2);
+
+      document.getElementById('researchOutput').textContent = data.research
+        ? JSON.stringify(data.research, null, 2)
+        : 'Waiting for research...';
+
+      document.getElementById('draftOutput').textContent = data.draft || 'Waiting for draft...';
+
+      document.getElementById('reviewOutput').textContent = data.review
+        ? JSON.stringify(data.review, null, 2)
+        : 'Waiting for review...';
+
+      applyStageStatus(status);
+    }
+
+    async function runWorkflow() {
+      const task = document.getElementById('taskInput').value.trim();
+      applyStageStatus('pending');
+      document.getElementById('statusValue').textContent = 'running';
+      document.getElementById('statusValue').className = 'value pending';
+
+      const response = await fetch('/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ task })
+      });
+
+      const data = await response.json();
+      updateStatusDisplay(data);
+    }
+
+    function resetView() {
+      document.getElementById('taskInput').value = 'Explain how AI agents use Python tools safely and effectively.';
+      document.getElementById('statusValue').textContent = 'pending';
+      document.getElementById('statusValue').className = 'value pending';
+      document.getElementById('researchValue').textContent = 'waiting';
+      document.getElementById('draftValue').textContent = 'waiting';
+      document.getElementById('reviewValue').textContent = 'waiting';
+      resetStages();
+      document.getElementById('stateOutput').textContent = 'No workflow run yet.';
+      document.getElementById('researchOutput').textContent = 'Waiting for research...';
+      document.getElementById('draftOutput').textContent = 'Waiting for draft...';
+      document.getElementById('reviewOutput').textContent = 'Waiting for review...';
+    }
+
+    document.getElementById('runButton').addEventListener('click', runWorkflow);
+    document.getElementById('resetButton').addEventListener('click', resetView);
+  </script>
+</body>
+</html>
