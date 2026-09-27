@@ -23,4 +23,6 @@ python main.py
 
 ## Notes
 
+View this article alongside the full collection in the [main project dashboard](../dashboard).
+
 The example uses local tool functions instead of live APIs, which makes it easy to understand the pattern before connecting to real services or model providers.

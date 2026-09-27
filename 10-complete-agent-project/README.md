@@ -23,4 +23,6 @@ python main.py
 
 ## Notes
 
+View this upcoming article alongside the full collection in the [main project dashboard](../dashboard).
+
 This project is intentionally simple and educational. It demonstrates the architecture of a complete agent without locking you into a specific framework or cloud platform.

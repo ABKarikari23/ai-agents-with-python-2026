@@ -23,4 +23,6 @@ python main.py
 
 ## Notes
 
+View this article alongside the full collection in the [main project dashboard](../dashboard).
+
 In real systems, memory is often a combination of short-term session state and longer-term retrieval. This example demonstrates the basic principles in a compact form.

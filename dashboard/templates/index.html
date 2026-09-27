@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Agents with Python | Series Dashboard</title>
+  <style>
+    :root { --ink: #17211b; --muted: #69746b; --paper: #f4f0e7; --panel: #fffdf7; --line: #d9d5c9; --accent: #e35c3a; --teal: #126b68; --soft: #e7eee5; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); font: 16px/1.5 Georgia, serif; background: radial-gradient(circle at 90% 5%, #f8c987 0, transparent 24%), linear-gradient(135deg, #f4f0e7 0%, #e9eee6 100%); }
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 28px 0 56px; }
+    header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; padding: 22px 0 40px; border-bottom: 1px solid var(--line); }
+    .kicker, .eyebrow { margin: 0 0 8px; color: var(--accent); font: 700 .78rem/1.2 Arial, sans-serif; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { max-width: 720px; margin: 0; font-size: clamp(2.4rem, 6vw, 5.5rem); line-height: .94; letter-spacing: -.03em; font-weight: 700; }
+    .intro { max-width: 280px; margin: 8px 0 0; color: var(--muted); }
+    .stamp { min-width: 116px; padding: 12px; border: 1px solid var(--ink); border-radius: 50%; text-align: center; transform: rotate(7deg); font: 700 .72rem/1.25 Arial, sans-serif; text-transform: uppercase; }
+    main { display: grid; grid-template-columns: 1.35fr .65fr; gap: 22px; margin-top: 28px; }
+    .panel { padding: 24px; background: rgba(255,253,247,.86); border: 1px solid var(--line); box-shadow: 10px 10px 0 rgba(18,107,104,.08); }
+    .panel h2 { margin: 0 0 18px; font-size: 1.5rem; }
+    .parts { display: grid; gap: 10px; }
+    .part { display: grid; grid-template-columns: 48px 1fr auto; gap: 14px; align-items: center; padding: 13px 0; border-top: 1px solid var(--line); }
+    .number { color: var(--accent); font: 700 1.2rem Arial, sans-serif; }
+    .part h3 { margin: 0; font-size: 1.05rem; }
+    .capability { display: block; color: var(--muted); font-size: .9rem; }
+    .badge { padding: 5px 8px; border-radius: 3px; color: var(--teal); background: var(--soft); font: 700 .68rem Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+    .badge.upcoming { color: #8b5b13; background: #f8e6c5; }
+    .badge.current { color: #fff; background: var(--accent); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+    .stat { padding: 12px; background: var(--soft); }
+    .stat strong { display: block; font: 700 1.7rem Arial, sans-serif; }
+    .stat span { color: var(--muted); font: .72rem Arial, sans-serif; text-transform: uppercase; }
+    textarea { width: 100%; min-height: 122px; padding: 13px; resize: vertical; color: var(--ink); background: #faf8f0; border: 1px solid var(--line); font: 1rem Georgia, serif; }
+    button { margin-top: 12px; padding: 12px 16px; border: 0; color: #fff; background: var(--teal); cursor: pointer; font: 700 .82rem Arial, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+    button:disabled { opacity: .55; cursor: wait; }
+    .result { min-height: 110px; margin-top: 18px; padding: 14px; color: var(--teal); background: #edf5ee; white-space: pre-wrap; }
+    .note { margin: 24px 0 0; color: var(--muted); font-size: .92rem; }
+    @media (max-width: 820px) { header, main { display: block; } .stamp { display: none; } .intro { max-width: none; margin: 18px 0 0; } .panel + .panel { margin-top: 20px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div><p class="kicker">The living project display</p><h1>AI Agents<br>with Python</h1><p class="intro">A single home for the series: seven published foundations, one active milestone, and the next three chapters waiting in the wings.</p></div>
+      <div class="stamp">Series<br>2026</div>
+    </header>
+    <main>
+      <section class="panel">
+        <p class="eyebrow">The collection</p><h2>From first principles to orchestration</h2>
+        <div class="parts">
+          {% for part in series_parts %}
+          <article class="part"><span class="number">{{ "%02d"|format(part.number) }}</span><div><h3>{{ part.title }}</h3><span class="capability">{{ part.capability }}</span></div><span class="badge {{ part.status }}">{{ part.status }}</span></article>
+          {% endfor %}
+        </div>
+      </section>
+      <aside class="panel">
+        <p class="eyebrow">Live demo</p><h2>Ask the collection</h2>
+        <div class="stats"><div class="stat"><strong>7</strong><span>published</span></div><div class="stat"><strong>1</strong><span>current</span></div><div class="stat"><strong>10</strong><span>planned</span></div></div>
+        <textarea id="task">How does this series grow from a simple AI agent into a multi-agent system?</textarea>
+        <button id="run">Run demo</button>
+        <div class="result" id="result">Ready. The main project dashboard is waiting for a task.</div>
+        <p class="note">This dashboard is the canonical display app. Article folders link here, while the implementation stays in one place for testing and deployment.</p>
+      </aside>
+    </main>
+  </div>
+  <script>
+    const button = document.getElementById('run');
+    const result = document.getElementById('result');
+    button.addEventListener('click', async () => {
+      button.disabled = true;
+      result.textContent = 'Running the series demo...';
+      try {
+        const response = await fetch('/api/demo', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({task: document.getElementById('task').value}) });
+        if (!response.ok) throw new Error('Request failed');
+        const data = await response.json();
+        result.textContent = `${data.answer}\n\nStages: ${data.stages.map(stage => stage.name).join(' -> ')}\nStatus: ${data.status}`;
+      } catch (error) { result.textContent = 'The demo could not be completed. Check that the dashboard server is running.'; }
+      finally { button.disabled = false; }
+    });
+  </script>
+</body>
+</html>

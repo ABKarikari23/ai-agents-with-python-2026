@@ -23,4 +23,6 @@ python main.py
 
 ## Notes
 
+View this article alongside the full collection in the [main project dashboard](../dashboard).
+
 The sample keeps the knowledge base in memory so it's easy to understand the retrieve-and-answer pattern without adding a vector database.

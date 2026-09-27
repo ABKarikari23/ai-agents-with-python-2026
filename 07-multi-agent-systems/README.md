@@ -1,5 +1,7 @@
 # AI Agents with Python 2026 — Part 7: Multi-Agent Systems
 
+View this article alongside the full collection in the [main project dashboard](../dashboard). The local Part 7 workflow monitor remains available through `python app.py`.
+
 ## Building Teams of Specialized AI Agents with Python
 So far in this series, we've progressively built the foundations of AI agents.
 

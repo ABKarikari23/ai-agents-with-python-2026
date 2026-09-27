@@ -23,4 +23,6 @@ python main.py
 
 ## Notes
 
+View this upcoming article alongside the full collection in the [main project dashboard](../dashboard).
+
 This example illustrates guardrails in code so you can see how to validate inputs, limit actions, and fail safely when a request is unsafe or ambiguous.

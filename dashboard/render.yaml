@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: ai-agents-with-python-dashboard
+    runtime: python
+    rootDir: dashboard
+    buildCommand: pip install -r requirements.txt
+    startCommand: waitress-serve --listen=*:10000 app:app

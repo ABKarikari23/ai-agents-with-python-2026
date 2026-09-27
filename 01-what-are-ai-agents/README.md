@@ -23,4 +23,6 @@ python main.py
 
 ## Notes
 
+View this article alongside the full collection in the [main project dashboard](../dashboard).
+
 This example is intentionally dependency-light so you can run it immediately. The goal is to understand the core idea of agents before adding external APIs and more advanced patterns.

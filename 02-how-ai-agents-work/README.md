@@ -23,4 +23,6 @@ python main.py
 
 ## Notes
 
+View this article alongside the full collection in the [main project dashboard](../dashboard).
+
 The code here keeps the logic local and readable so the agent loop remains understandable before you connect it to real models or APIs.

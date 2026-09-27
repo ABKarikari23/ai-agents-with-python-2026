@@ -7,6 +7,18 @@ It's the continuation of the earlier **AI With Python 2026** series, which cover
 
 Each folder below corresponds to one article in the series. Every folder is self-contained: its own `README.md`, `requirements.txt`, and starter code, so you can clone the repo and jump straight to the part you're reading.
 
+## Main project dashboard
+
+The collection display is maintained in [`dashboard`](./dashboard). It brings the article journey together in one testable Flask app and is intended for online deployment after the series is complete.
+
+```bash
+cd dashboard
+pip install -r requirements.txt
+python app.py
+```
+
+Open `http://127.0.0.1:5001`.
+
 ## Series Roadmap
 
 | Part | Topic | Folder |

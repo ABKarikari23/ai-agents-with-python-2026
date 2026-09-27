@@ -23,4 +23,6 @@ python main.py
 
 ## Notes
 
+View this upcoming article alongside the full collection in the [main project dashboard](../dashboard).
+
 The workflow demonstrates the core agentic automation pattern: interpret the task, plan the steps, act, and validate the outcome.

@@ -23,4 +23,6 @@ python main.py
 
 ## Notes
 
+View this article alongside the full collection in the [main project dashboard](../dashboard).
+
 This is a friendly introduction to agent design. It avoids external dependencies so you can focus on the behavior and flow of the agent itself.
