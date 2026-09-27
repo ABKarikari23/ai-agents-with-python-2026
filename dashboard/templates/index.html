@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Agents with Python | Series Dashboard</title>
   <style>
-    :root { --ink: #17211b; --muted: #69746b; --paper: #f4f0e7; --panel: #fffdf7; --line: #d9d5c9; --accent: #e35c3a; --teal: #126b68; --soft: #e7eee5; }
+    :root { --ink: #171915; --muted: #697066; --paper: #f4efe2; --panel: #fffdf7; --line: #d7d1bf; --accent: #c9362b; --gold: #e5b52f; --teal: #087443; --soft: #e4f0e5; --black: #171915; }
     * { box-sizing: border-box; }
-    body { margin: 0; color: var(--ink); font: 16px/1.5 Georgia, serif; background: radial-gradient(circle at 90% 5%, #f8c987 0, transparent 24%), linear-gradient(135deg, #f4f0e7 0%, #e9eee6 100%); }
+    body { margin: 0; color: var(--ink); font: 16px/1.5 Georgia, serif; background: radial-gradient(circle at 90% 5%, rgba(229,181,47,.34) 0, transparent 24%), linear-gradient(135deg, #f4efe2 0%, #e9f0e6 100%); }
     .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 28px 0 56px; }
-    header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; padding: 22px 0 40px; border-bottom: 1px solid var(--line); }
+    header { display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; padding: 22px 0 25px; border-bottom: 1px solid var(--line); }
+    .ghana-ribbon { height: 8px; margin-bottom: 22px; background: linear-gradient(90deg, var(--accent) 0 33.33%, var(--gold) 33.33% 66.66%, var(--teal) 66.66% 100%); box-shadow: 0 3px 0 var(--black); }
     .kicker, .eyebrow { margin: 0 0 8px; color: var(--accent); font: 700 .78rem/1.2 Arial, sans-serif; letter-spacing: .13em; text-transform: uppercase; }
     h1 { max-width: 720px; margin: 0; font-size: clamp(2.4rem, 6vw, 5.5rem); line-height: .94; letter-spacing: -.03em; font-weight: 700; }
     .intro { max-width: 280px; margin: 8px 0 0; color: var(--muted); }
-    .stamp { min-width: 116px; padding: 12px; border: 1px solid var(--ink); border-radius: 50%; text-align: center; transform: rotate(7deg); font: 700 .72rem/1.25 Arial, sans-serif; text-transform: uppercase; }
+    .stamp { min-width: 116px; padding: 12px; border: 2px solid var(--gold); border-radius: 50%; text-align: center; transform: rotate(7deg); font: 700 .72rem/1.25 Arial, sans-serif; text-transform: uppercase; background: var(--teal); color: #fffdf7; box-shadow: 5px 5px 0 var(--accent); }
     main { display: grid; grid-template-columns: 1.35fr .65fr; gap: 22px; margin-top: 28px; }
     .panel { padding: 24px; background: rgba(255,253,247,.86); border: 1px solid var(--line); box-shadow: 10px 10px 0 rgba(18,107,104,.08); }
     .panel h2 { margin: 0 0 18px; font-size: 1.5rem; }
@@ -24,7 +25,7 @@
     .capability { display: block; color: var(--muted); font-size: .9rem; }
     .badge { padding: 5px 8px; border-radius: 3px; color: var(--teal); background: var(--soft); font: 700 .68rem Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
     .badge.upcoming { color: #8b5b13; background: #f8e6c5; }
-    .badge.current { color: #fff; background: var(--accent); }
+    .badge.current { color: var(--black); background: var(--gold); }
     .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
     .stat { padding: 12px; background: var(--soft); }
     .stat strong { display: block; font: 700 1.7rem Arial, sans-serif; }
@@ -47,9 +48,10 @@
 </head>
 <body>
   <div class="wrap">
+    <div class="ghana-ribbon" aria-hidden="true"></div>
     <header>
       <div><p class="kicker">The living project display</p><h1>AI Agents<br>with Python</h1><p class="intro">A single home for the series: seven published foundations, one active milestone, and the next three chapters waiting in the wings.</p></div>
-      <div class="stamp">Series<br>2026</div>
+      <div class="stamp">Ghana<br>2026</div>
     </header>
     <main>
       <section class="panel">
