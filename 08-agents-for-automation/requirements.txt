@@ -1,3 +1,4 @@
-# Add this part's dependencies here, e.g.:
-# openai
-# python-dotenv
+# This example uses only the Python standard library — no external dependencies.
+# In a production version of this workflow you might add:
+# openai / anthropic   (model-based analysis instead of rule-based agents)
+# python-dotenv       (keep secrets outside prompts — article section 35)
