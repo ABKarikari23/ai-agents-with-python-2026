@@ -17,8 +17,8 @@ SERIES_PARTS = [
     {"number": 5, "title": "Adding Memory and Context", "folder": "05-memory-and-context", "status": "published", "capability": "Persistent context"},
     {"number": 6, "title": "RAG + AI Agents", "folder": "06-rag-plus-agents", "status": "published", "capability": "Knowledge-grounded answers"},
     {"number": 7, "title": "Multi-Agent Systems", "folder": "07-multi-agent-systems", "status": "published", "capability": "Specialists and orchestration"},
-    {"number": 8, "title": "AI Agents for Automation", "folder": "08-agents-for-automation", "status": "current", "capability": "Automated agentic workflows"},
-    {"number": 9, "title": "Security, Guardrails and Reliability", "folder": "09-security-guardrails-reliability", "status": "upcoming", "capability": "Controlled autonomy"},
+    {"number": 8, "title": "AI Agents for Automation", "folder": "08-agents-for-automation", "status": "published", "capability": "Automated agentic workflows"},
+    {"number": 9, "title": "Security, Guardrails and Reliability", "folder": "09-security-guardrails-reliability", "status": "current", "capability": "Controlled autonomy"},
     {"number": 10, "title": "Building a Complete AI Agent Project", "folder": "10-complete-agent-project", "status": "upcoming", "capability": "Production-ready system"},
 ]
 
@@ -30,7 +30,7 @@ def index():
 
 @app.get("/api/series")
 def series():
-    return jsonify({"total": len(SERIES_PARTS), "published": 8, "current": 8, "parts": SERIES_PARTS})
+    return jsonify({"total": len(SERIES_PARTS), "published": 9, "current": 9, "parts": SERIES_PARTS})
 
 
 @app.post("/api/demo")
@@ -48,9 +48,9 @@ def demo():
             "task": task,
             "status": "completed",
             "elapsed_ms": round((perf_counter() - started) * 1000, 2),
-            "active_parts": 8,
+            "active_parts": 9,
             "stages": stages,
-            "answer": "The collection progresses from agent fundamentals in Part 1 to automated agentic workflows in Part 8. Parts 9 to 10 are reserved for the next stages of the series.",
+            "answer": "The collection progresses from agent fundamentals in Part 1 through security, guardrails, and reliability in Part 9. Part 10 brings the complete agent project together.",
         }
     )
 

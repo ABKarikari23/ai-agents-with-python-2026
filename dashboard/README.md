@@ -1,6 +1,6 @@
 # AI Agents with Python: Main Dashboard
 
-This is the canonical project display for the article series. It shows the published journey through Parts 1-7, the current Part 7 multi-agent milestone, and the upcoming Parts 8-10.
+This is the canonical project display for the article series. It shows Parts 1-8 as published, Part 9 as the current security, guardrails, and reliability milestone, and Part 10 as the upcoming complete agent project.
 
 The dashboard is intentionally independent from an individual article so it can be tested locally now and deployed online after the series is complete.
 

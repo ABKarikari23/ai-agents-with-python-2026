@@ -21,8 +21,20 @@ pip install -r requirements.txt
 python main.py
 ```
 
+The demo registers a read-only metrics tool and an approval-gated service
+restart. It demonstrates role-based authorization, allowlisted arguments, and
+a limit on total tool proposals. The approval flag is simulated locally; a
+production system must verify a trusted approval record tied to the exact
+action and resource.
+
+Run the guardrail tests with:
+
+```bash
+python -m unittest test_part9.py
+```
+
 ## Notes
 
-View this upcoming article alongside the full collection in the [main project dashboard](../dashboard).
+View this part alongside the full collection in the [main project dashboard](../dashboard).
 
 This example illustrates guardrails in code so you can see how to validate inputs, limit actions, and fail safely when a request is unsafe or ambiguous.
