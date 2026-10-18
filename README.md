@@ -32,14 +32,14 @@ Open `http://127.0.0.1:5001`.
 | 7 | Multi-Agent Systems | [`07-multi-agent-systems`](./07-multi-agent-systems) |
 | 8 | AI Agents for Automation | [`08-agents-for-automation`](./08-agents-for-automation) |
 | 9 | Security, Guardrails and Reliability | [`09-security-guardrails-reliability`](./09-security-guardrails-reliability) |
-| 10 | Building a Complete AI Agent Project | [`10-complete-agent-project`](./10-complete-agent-project) |
+| 10 | Build a Complete AI Agent with Python | [`10-complete-agent-project`](./10-complete-agent-project) |
 
 ## How to use this repo
 
 Clone it:
 
 ```bash
-git clone https://github.com/<ABKarikari23>/ai-agents-with-python-2026.git
+git clone https://github.com/ABKarikari23/ai-agents-with-python-2026.git
 cd ai-agents-with-python-2026
 ```
 

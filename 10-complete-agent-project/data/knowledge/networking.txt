@@ -1,0 +1,11 @@
+NETWORK TROUBLESHOOTING
+
+If an application is unreachable:
+
+1. Confirm the client can reach the server.
+2. Check DNS resolution.
+3. Verify that the application service is running.
+4. Check firewall rules and required ports.
+5. Review application and proxy logs.
+6. Check whether the problem affects one user or multiple users.
+7. Escalate if the issue persists or requires privileged changes.

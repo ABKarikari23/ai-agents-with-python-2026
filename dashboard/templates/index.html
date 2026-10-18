@@ -50,12 +50,12 @@
   <div class="wrap">
     <div class="ghana-ribbon" aria-hidden="true"></div>
     <header>
-      <div><p class="kicker">The living project display</p><h1>AI Agents<br>with Python</h1><p class="intro">A single home for the series: nine published foundations, one active milestone, and the final chapter waiting in the wings.</p></div>
+      <div><p class="kicker">The complete project display</p><h1>AI Agents<br>with Python</h1><p class="intro">A single home for all ten published parts, from agent foundations to a complete, knowledge-powered Python agent.</p></div>
       <div class="stamp">Ghana<br>2026</div>
     </header>
     <main>
       <section class="panel">
-        <p class="eyebrow">The collection</p><h2>From first principles to orchestration</h2>
+        <p class="eyebrow">The collection</p><h2>From first principles to complete systems</h2>
         <div class="parts">
           {% for part in series_parts %}
           <article class="part"><span class="number">{{ "%02d"|format(part.number) }}</span><div><h3>{{ part.title }}</h3><span class="capability">{{ part.capability }}</span></div><span class="badge {{ part.status }}">{{ part.status }}</span></article>
@@ -64,7 +64,7 @@
       </section>
       <aside class="panel">
         <p class="eyebrow">Live demo</p><h2>Ask the collection</h2>
-        <div class="stats"><div class="stat"><strong>9</strong><span>published</span></div><div class="stat"><strong>1</strong><span>current</span></div><div class="stat"><strong>10</strong><span>planned</span></div></div>
+        <div class="stats"><div class="stat"><strong>10</strong><span>published</span></div><div class="stat"><strong>1</strong><span>final part</span></div><div class="stat"><strong>10</strong><span>total</span></div></div>
         <textarea id="task">How does this series grow from a simple AI agent into a multi-agent system?</textarea>
         <button id="run">Run demo</button>
         <div class="result" id="result">Ready. The main project dashboard is waiting for a task.</div>
@@ -72,7 +72,7 @@
           <h3>AI agent run</h3>
           <div id="stageList"></div>
         </div>
-        <p class="note">This dashboard is the canonical display app. Article folders link here, while the implementation stays in one place for testing and deployment.</p>
+        <p class="note">Part 10 brings together model integration, approved tools, SQLite memory, local knowledge retrieval, execution limits, and tests. The implementation is provider-neutral and its tools use demonstration data.</p>
       </aside>
     </main>
   </div>
@@ -90,7 +90,21 @@
         if (!response.ok) throw new Error('Request failed');
         const data = await response.json();
         result.textContent = `${data.answer}\n\nStages: ${data.stages.map(stage => stage.name).join(' -> ')}\nStatus: ${data.status}`;
-        stageList.innerHTML = data.stages.map((stage, index) => `<div class="run-stage"><span class="stage-mark">${index + 1}</span><div><strong>${stage.name}</strong><span>${stage.detail}</span></div></div>`).join('');
+        stageList.replaceChildren(...data.stages.map((stage, index) => {
+          const row = document.createElement('div');
+          row.className = 'run-stage';
+          const mark = document.createElement('span');
+          mark.className = 'stage-mark';
+          mark.textContent = String(index + 1);
+          const detail = document.createElement('div');
+          const name = document.createElement('strong');
+          name.textContent = stage.name;
+          const description = document.createElement('span');
+          description.textContent = stage.detail;
+          detail.append(name, description);
+          row.append(mark, detail);
+          return row;
+        }));
         agentRun.classList.add('visible');
       } catch (error) { result.textContent = 'The demo could not be completed. Check that the dashboard server is running.'; }
       finally { button.disabled = false; }

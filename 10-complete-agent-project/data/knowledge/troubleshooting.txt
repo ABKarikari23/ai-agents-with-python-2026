@@ -1,0 +1,10 @@
+SERVER TROUBLESHOOTING
+
+When a server is online but an application is unavailable:
+
+1. Confirm the application endpoint.
+2. Check service health and listening ports.
+3. Review recent deployment changes.
+4. Inspect application errors.
+5. Verify database and upstream dependencies.
+6. Do not restart production services without the required authorization.

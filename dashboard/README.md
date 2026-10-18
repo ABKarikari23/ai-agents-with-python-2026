@@ -1,6 +1,6 @@
 # AI Agents with Python: Main Dashboard
 
-This is the canonical project display for the article series. It shows Parts 1-8 as published, Part 9 as the current security, guardrails, and reliability milestone, and Part 10 as the upcoming complete agent project.
+This is the canonical project display for the article series. It shows Parts 1-9 as published and Part 10 as the current final chapter: a complete, knowledge-powered agent project.
 
 The dashboard is intentionally independent from an individual article so it can be tested locally now and deployed online after the series is complete.
 
@@ -34,7 +34,7 @@ waitress-serve --listen=*:$(PORT) app:app
 
 ## Updating each week
 
-When a new article is published, update the matching entry in `dashboard/app.py` from `upcoming` to `published` or `current`, then update the article's README link if its folder changes. The dashboard is the only display app that needs to be maintained.
+When an article is published, update its entry in `dashboard/app.py` and keep the published/current counts derived from the series metadata.
 
 ## API
 
